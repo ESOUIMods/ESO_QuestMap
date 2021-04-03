@@ -11,7 +11,7 @@ QuestMap.displayName = "Quest Map"
 QuestMap.idName = "QuestMap"
 local logger = LibDebugLogger.Create(QuestMap.idName)
 QuestMap.logger = logger
-QuestMap.show_log = false
+QuestMap.show_log = true
 local SDLV = DebugLogViewer
 
 local function create_log(log_type, log_content)
@@ -83,6 +83,7 @@ QuestMap.PIN_TYPE_QUEST_SKILL          = "QuestMap_skill"
 QuestMap.PIN_TYPE_QUEST_DUNGEON        = "QuestMap_dungeon"
 QuestMap.PIN_TYPE_QUEST_HOLIDAY        = "QuestMap_holiday"
 QuestMap.PIN_TYPE_QUEST_ZONESTORY        = "QuestMap_zonestory"
+QuestMap.PIN_TYPE_QUEST_CRAFTING        = "QuestMap_crafting"
 
 QuestMap.PIN_TYPE_QUEST_UNCOMPLETED_PVP    = "QuestMap_uncompleted_pvp"
 QuestMap.PIN_TYPE_QUEST_COMPLETED_PVP      = "QuestMap_completed_pvp"
@@ -96,6 +97,7 @@ QuestMap.PIN_TYPE_QUEST_SKILL_PVP          = "QuestMap_skill_pvp"
 QuestMap.PIN_TYPE_QUEST_DUNGEON_PVP        = "QuestMap_dungeon_pvp"
 QuestMap.PIN_TYPE_QUEST_HOLIDAY_PVP        = "QuestMap_holiday_pvp"
 QuestMap.PIN_TYPE_QUEST_ZONESTORY_PVP        = "QuestMap_zonestory_pvp"
+QuestMap.PIN_TYPE_QUEST_CRAFTING_PVP        = "QuestMap_crafting_pvp"
 
 QuestMap.icon_sets = {
     QuestMap = "QuestMap/icons/pinQuestCompleted.dds",
@@ -161,6 +163,7 @@ QuestMap.pin_color[QuestMap.PIN_TYPE_QUEST_SKILL]       = ZO_ColorDef:New(unpack
 QuestMap.pin_color[QuestMap.PIN_TYPE_QUEST_DUNGEON]     = ZO_ColorDef:New(unpack(QuestMap.color_default))
 QuestMap.pin_color[QuestMap.PIN_TYPE_QUEST_HOLIDAY]     = ZO_ColorDef:New(unpack(QuestMap.color_default))
 QuestMap.pin_color[QuestMap.PIN_TYPE_QUEST_ZONESTORY]     = ZO_ColorDef:New(unpack(QuestMap.color_default))
+QuestMap.pin_color[QuestMap.PIN_TYPE_QUEST_CRAFTING]     = ZO_ColorDef:New(unpack(QuestMap.color_default))
 
 QuestMap.tooltip_color = {}
 QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_UNCOMPLETED] = ZO_ColorDef:New(unpack(QuestMap.color_default))
@@ -175,6 +178,7 @@ QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_SKILL]       = ZO_ColorDef:New(un
 QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_DUNGEON]     = ZO_ColorDef:New(unpack(QuestMap.color_default))
 QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_HOLIDAY] = ZO_ColorDef:New(unpack(QuestMap.color_default))
 QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_ZONESTORY] = ZO_ColorDef:New(unpack(QuestMap.color_default))
+QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_CRAFTING] = ZO_ColorDef:New(unpack(QuestMap.color_default))
 
 QuestMap.QUEST_NAME_LAYOUT = {
 
@@ -250,6 +254,12 @@ QuestMap.QUEST_NAME_LAYOUT = {
         color = QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_ZONESTORY],
         suffix = "(ZO)",
     },
+    [QuestMap.PIN_TYPE_QUEST_CRAFTING] =
+    {
+        color_default = { [1] = 0.6627451181, [2] = 0.6627451181, [3] = 0.6627451181, [4] = 1, },
+        color = QuestMap.tooltip_color[QuestMap.PIN_TYPE_QUEST_CRAFTING],
+        suffix = "(CR)",
+    },
 }
 
 QuestMap.settings_default = {
@@ -271,6 +281,7 @@ QuestMap.settings_default = {
         [QuestMap.PIN_TYPE_QUEST_DUNGEON]                = false,
         [QuestMap.PIN_TYPE_QUEST_HOLIDAY]                = false,
         [QuestMap.PIN_TYPE_QUEST_ZONESTORY]                = false,
+        [QuestMap.PIN_TYPE_QUEST_CRAFTING]                = false,
         [QuestMap.PIN_TYPE_QUEST_UNCOMPLETED_PVP]    = true,
         [QuestMap.PIN_TYPE_QUEST_COMPLETED_PVP]      = false,
         [QuestMap.PIN_TYPE_QUEST_HIDDEN_PVP]         = false,
@@ -283,6 +294,7 @@ QuestMap.settings_default = {
         [QuestMap.PIN_TYPE_QUEST_DUNGEON_PVP]        = false,
         [QuestMap.PIN_TYPE_QUEST_HOLIDAY_PVP]        = false,
         [QuestMap.PIN_TYPE_QUEST_ZONESTORY_PVP]        = false,
+        [QuestMap.PIN_TYPE_QUEST_CRAFTING_PVP]        = false,
     },
     ["displayClickMsg"] = true,
     ["displayHideQuest"] = true,
@@ -302,6 +314,7 @@ QuestMap.settings_default = {
         [QuestMap.PIN_TYPE_QUEST_DUNGEON]        = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_DUNGEON].color_default,
         [QuestMap.PIN_TYPE_QUEST_HOLIDAY]        = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_HOLIDAY].color_default,
         [QuestMap.PIN_TYPE_QUEST_ZONESTORY]      = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_ZONESTORY].color_default,
+        [QuestMap.PIN_TYPE_QUEST_CRAFTING]      = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_CRAFTING].color_default,
     },
     ["pin_tooltip_colors"] = {
         [QuestMap.PIN_TYPE_QUEST_UNCOMPLETED]    = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_UNCOMPLETED].color_default,
@@ -316,5 +329,6 @@ QuestMap.settings_default = {
         [QuestMap.PIN_TYPE_QUEST_DUNGEON]        = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_DUNGEON].color_default,
         [QuestMap.PIN_TYPE_QUEST_HOLIDAY]        = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_HOLIDAY].color_default,
         [QuestMap.PIN_TYPE_QUEST_ZONESTORY]      = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_ZONESTORY].color_default,
+        [QuestMap.PIN_TYPE_QUEST_CRAFTING]      = QuestMap.QUEST_NAME_LAYOUT[QuestMap.PIN_TYPE_QUEST_CRAFTING].color_default,
     },
 }

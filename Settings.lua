@@ -408,6 +408,30 @@ local optionsTable = {
         end,
         default = QuestMap.create_color_table_rbga( QuestMap.settings_default.pin_tooltip_colors[QuestMap.PIN_TYPE_QUEST_ZONESTORY] ),
     },
+    -- Crafting pins
+    {
+        type = "colorpicker",
+        name = GetString(QUESTMAP_CRAFTING_PIN_COLOR),
+        tooltip = GetString(QUESTMAP_CRAFTING_PIN_COLOR_DESC),
+        getFunc = function() return unpack(QuestMap.settings.pin_colors[QuestMap.PIN_TYPE_QUEST_CRAFTING]) end,
+        setFunc = function(r,g,b,a)
+            QuestMap.settings.pin_colors[QuestMap.PIN_TYPE_QUEST_CRAFTING] = QuestMap.create_color_table(r, g, b, a)
+            QuestMap.pin_color[QuestMap.PIN_TYPE_QUEST_CRAFTING]:SetRGBA(unpack(QuestMap.settings["pin_colors"][QuestMap.PIN_TYPE_QUEST_CRAFTING]))
+            LMP:RefreshPins(QuestMap.PIN_TYPE_QUEST_CRAFTING)
+        end,
+        default = QuestMap.create_color_table_rbga( QuestMap.settings_default.pin_colors[QuestMap.PIN_TYPE_QUEST_CRAFTING] ),
+    },
+    {
+        type = "colorpicker",
+        name = GetString(QUESTMAP_CRAFTING_TOOLTIP_COLOR),
+        tooltip = GetString(QUESTMAP_CRAFTING_TOOLTIP_COLOR_DESC),
+        getFunc = function() return unpack(QuestMap.settings.pin_tooltip_colors[QuestMap.PIN_TYPE_QUEST_CRAFTING]) end,
+        setFunc = function(r,g,b,a)
+            QuestMap.settings.pin_tooltip_colors[QuestMap.PIN_TYPE_QUEST_CRAFTING] = QuestMap.create_color_table(r, g, b, a)
+            QuestMap:RefreshPinLayout()
+        end,
+        default = QuestMap.create_color_table_rbga( QuestMap.settings_default.pin_tooltip_colors[QuestMap.PIN_TYPE_QUEST_CRAFTING] ),
+    },
     {
         type = "header",
         name = "",

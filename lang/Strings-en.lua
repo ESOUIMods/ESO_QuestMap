@@ -20,6 +20,7 @@ local strings = {
     QUESTMAP_HOLIDAY              = "Holiday",
     QUESTMAP_WEEKLY               = "Weekly",
     QUESTMAP_ZONESTORY            = "Zone Story",
+    QUESTMAP_CRAFTING             = "Crafting",
 
     QUESTMAP_HIDE                 = "Hide quest",
     QUESTMAP_UNHIDE               = "Unhide quest",
@@ -152,6 +153,13 @@ local strings = {
 
     QUESTMAP_ZONESTORY_TOOLTIP_COLOR  = "Zonestory Quest Tooltip Color",
     QUESTMAP_ZONESTORY_TOOLTIP_COLOR_DESC  = "Change Zonestory Quest Tooltip Color",
+
+    -- Crafting quest pin text
+    QUESTMAP_CRAFTING_PIN_COLOR  = "Crafting Quest Pin Color",
+    QUESTMAP_CRAFTING_PIN_COLOR_DESC  = "Change Crafting Quest Pin Color",
+
+    QUESTMAP_CRAFTING_TOOLTIP_COLOR  = "Crafting Quest Tooltip Color",
+    QUESTMAP_CRAFTING_TOOLTIP_COLOR_DESC  = "Change Crafting Quest Tooltip Color",
 
 }
 
